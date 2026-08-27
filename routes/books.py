@@ -34,6 +34,16 @@ def get_books():
         "pages": pagination.pages
     }), 200
 
+def normalize_status(status):
+    if status in ('want_to_read', 'want to read'):
+        return 'want-to-read'
+    if status in ('currently_reading', 'reading'):
+        return 'reading'
+    if status == 'read':
+        return 'read'
+    return 'want-to-read'
+
+
 @books_bp.route('/books', methods=['POST'])
 @jwt_required()
 def create_book():
@@ -46,7 +56,7 @@ def create_book():
         title=data.get('title'),
         author=data.get('author'),
         cover_url=data.get('cover_url'),
-        status=data.get('status', 'want_to_read'),
+        status=normalize_status(data.get('status', 'want-to-read')),
         rating=data.get('rating')
     )
     db.session.add(new_book)
@@ -67,7 +77,7 @@ def update_book(book_id):
 
     data = request.get_json() or {}
     if 'status' in data:
-        book.status = data['status']
+        book.status = normalize_status(data['status'])
     if 'rating' in data:
         book.rating = data['rating']
 
