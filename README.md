@@ -340,7 +340,7 @@ Before running the backend, make sure you have:
 * Python **3.10 or higher**
 * `pip`
 * `git`
-* A Gemini API key from [Google AI Studio](https://aistudio.google.com/)
+* A Gemini API key from [Google AI Studio](https://aistudio.google.com/)  (Make sure you use your personal email for this.Do not use school email)
 
 ---
 
